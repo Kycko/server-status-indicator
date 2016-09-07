@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import gi, signal
+gi.require_version('AppIndicator3', '0.1')
+from gi.repository import AppIndicator3, Gtk
+from gi.repository.GObject import timeout_add
+from os import system
+from os.path import abspath
+
+APPINDICATOR_ID = 'homeserver_status_indicator'
+#--- WRITE YOUR SERVER NAME/IP HERE
+SERVER_IP = '192.168.1.1'
+#--- WRITE YOUR COMMAND TO OPEN TERMINAL EMULATOR AND CONNECT VIA SSH
+SSH_COMMAND = 'gnome-terminal -x ssh USER@SERVER'
+#--- (optional) Change timeout between automatic ping executions (in seconds)
+UPDATE_INTERVAL = 60
+
+DIR_ICONS = 'icons/'
+indicator = AppIndicator3.Indicator.new(APPINDICATOR_ID, 'smth', AppIndicator3.IndicatorCategory.SYSTEM_SERVICES)
+
+def main():
+    ping_server(None)
+    indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+    indicator.set_menu(build_menu())
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    timeout_add(UPDATE_INTERVAL*1000, ping_server, (None))
+    Gtk.main()
+def ping_server(xxx):
+    indicator.set_icon(abspath(DIR_ICONS + ('mail-send-receive.png', 'list-remove.png')[bool(system('ping -c 1 ' + SERVER_IP))]))
+    return True
+def ssh_connect(xxx):
+    system(SSH_COMMAND)
+    return True
+def build_menu():
+    menu = Gtk.Menu()
+    item_check_status = Gtk.MenuItem('Check status now')
+    item_ssh_connect = Gtk.MenuItem('Connect via SSH')
+    item_quit = Gtk.MenuItem('Quit')
+    item_check_status.connect('activate', ping_server)
+    item_ssh_connect.connect('activate', ssh_connect)
+    item_quit.connect('activate', quit)
+    menu.append(item_check_status)
+    menu.append(item_ssh_connect)
+    menu.append(item_quit)
+    menu.show_all()
+    return menu
+def quit(source):
+    Gtk.main_quit()
+
+if __name__ == '__main__':
+    main()

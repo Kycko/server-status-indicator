@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+print('')
+vars = {'SERVER_IP'     : '',
+        'SSH_COMMAND'   : ''}
+for key in ('SERVER_IP', 'SSH_COMMAND'):
+    while not vars[key]:
+        vars[key] = input(('Enter your server name/IP (e.g. 192.168.1.1 or example.com): ', 'Enter your command to open terminal emulator and connect via SSH (e.g. gnome-terminal -x ssh USER@SERVER): ')[key == 'SSH_COMMAND'])
+vars['UPDATE_INTERVAL'] = input('Enter timeout between automatic ping executions (in seconds, 60 is default): ')
+
+def main():
+    FILE = 'server-status-indicator'
+    file_data = read_file(FILE)
+    for key in vars.keys():
+        if vars[key]:
+            file_data = change_value(key, file_data)
+    write_to_file(FILE, file_data)
+def change_value(key, file_data):
+    for i in range(len(file_data)):
+        if key in file_data[i]:
+            if key != 'UPDATE_INTERVAL':
+                quote = "'"
+            else:
+                quote = ""
+            file_data[i] = key + " = " + quote + vars[key] + quote + "\n"
+            return file_data
+def read_file(file):
+    list = open(file, 'r', encoding='utf-8')
+    array = [string[:len(string)-1]+'\n' for string in list]
+    list.close()
+    return array
+def write_to_file(file, data, method='w'):
+    list = open(file, method, encoding='utf-8')
+    list.writelines(data)
+    list.close()
+
+if __name__ == "__main__":
+    main()
