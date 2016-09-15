@@ -1,6 +1,6 @@
 # Server status indicator
 
-Indicator for Ubuntu Unity to show your home server status (using ping command) and quickly connect via SSH.
+Indicator for Unity/Pantheon DE to show your home server status (using ping command) and quickly connect via SSH.
 
 ##How to use
 
@@ -27,3 +27,5 @@ Can't ping: ![](http://storage8.static.itmages.ru/i/16/0727/h_1469660000_9644602
 ### Menu:
 
 ![](http://storage7.static.itmages.ru/i/16/0729/h_1469829377_6782872_c7d677b1d7.png)
+
+![](http://storage9.static.itmages.ru/i/16/0915/h_1473942240_3413413_4026b49d90.png)
