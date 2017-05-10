@@ -1,10 +1,10 @@
 # Server status indicator
 
-Indicator for Unity/Pantheon DE to show your home server status (using ping command) and quickly connect via SSH.
+Tray indicator to show your home server status (using ping command) and quickly connect via SSH. Requires *AppIndicator3* to work.
 
-##How to use
+## How to use
 
-###Without installation
+### Without installation
 
 You can download *server-status-indicator* and *postInstallationSettings.py* files into any location on your machine and run it:
 
@@ -12,11 +12,11 @@ You can download *server-status-indicator* and *postInstallationSettings.py* fil
 
 2) Execute *server-status-indicator*
 
-###With deb-package
+### With deb-package
 
 Download .deb package from [releases tab] (https://github.com/Kycko/server-status-indicator/releases). All necessary questions will be asked during installation.
 
-##Screenshots
+## Screenshots
 
 ### Icon
 
